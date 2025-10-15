@@ -2,6 +2,7 @@ import os
 import streamlit as st
 from backend.parsing_utils import structured_data, parse_job_description
 from backend.match_job import match_job
+from backend.database import SessionLocal, Resume, JobDescription, Match  # ✅ NEW IMPORTS
 
 
 st.set_page_config(page_title="Smart Resume Screener By Legend Ronith Dhanesh", layout="wide", page_icon="🤖")
@@ -25,6 +26,46 @@ if uploaded_file and jd_text:
             jd_data = parse_job_description(jd_text)
 
             result = match_job(resume_data, jd_data)
+
+            try:
+                session = SessionLocal()
+
+                resume = Resume(
+                    name=resume_data.get("Name"),
+                    email=resume_data.get("Email"),
+                    phone=resume_data.get("Phone"),
+                    skills=resume_data.get("Skills"),
+                    education=resume_data.get("Education"),
+                    projects=resume_data.get("Projects"),
+                    parsed_data=resume_data,
+                )
+                session.add(resume)
+                session.commit()
+
+                job = JobDescription(
+                    title=jd_data.get("role"),
+                    company=jd_data.get("company"),
+                    required_skills=jd_data.get("required_skills"),
+                    jd_data=jd_data,
+                )
+                session.add(job)
+                session.commit()
+
+                match_entry = Match(
+                    resume_id=resume.id,
+                    job_id=job.id,
+                    match_score=result.get("match_score"),
+                    summary_of_fit=result.get("summary_of_fit"),
+                    matched_skills=result.get("matched_skills"),
+                    missing_skills=result.get("missing_skills"),
+                )
+                session.add(match_entry)
+                session.commit()
+
+            except Exception as e:
+                st.error(f"⚠️ Error saving to database: {e}")
+            finally:
+                session.close()
 
 
         st.subheader("📊 Match Results")
@@ -54,6 +95,8 @@ if uploaded_file and jd_text:
 
         st.markdown("### 🏁 Recommendation")
         st.success(result["recommendation"])
+
+        st.sidebar.markdown("[📊 Open Recruiter Dashboard →](http://localhost:8502)")
 
 else:
     st.info("Upload a resume and paste a job description to begin.")
