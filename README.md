@@ -1,5 +1,6 @@
-# 🤖 Smart Resume Screener  
-### *AI-powered ATS for Recruiters — Built by Legend Ronith Dhanesh*
+# 🤖 Smart Resume Screener
+
+### _AI-powered ATS for Recruiters — Built by Legend Ronith Dhanesh_
 
 ---
 
@@ -8,9 +9,10 @@
 **Smart Resume Screener** is an intelligent Applicant Tracking System (ATS) that leverages **LLMs**, **LangChain**, and **LlamaParse** to automatically analyze resumes, extract structured information, and match candidates to job descriptions based on skills, education, and project relevance.
 
 Recruiters can:
-- Upload any **resume (PDF)**  
-- Paste any **job description**  
-- Get an instant **match score**, **fit summary**, and **skill gap analysis**  
+
+- Upload any **resume (PDF)**
+- Paste any **job description**
+- Get an instant **match score**, **fit summary**, and **skill gap analysis**
 - View results in an interactive **Streamlit dashboard**
 
 ---
@@ -59,20 +61,21 @@ Recruiters can:
 
 ## ⚙️ Tech Stack
 
-| Layer | Technology |
-|-------|-------------|
-| **Frontend** | Streamlit |
-| **Backend / LLM Framework** | LangChain |
-| **LLM Provider** | Google Gemini (via `langchain-google-genai`) |
-| **Document Parsing** | LlamaParse |
-| **Database** | SQLAlchemy (SQLite / PostgreSQL) |
-| **Environment Management** | python-dotenv |
+| Layer                       | Technology                                   |
+| --------------------------- | -------------------------------------------- |
+| **Frontend**                | Streamlit                                    |
+| **Backend / LLM Framework** | LangChain                                    |
+| **LLM Provider**            | Google Gemini (via `langchain-google-genai`) |
+| **Document Parsing**        | LlamaParse                                   |
+| **Database**                | SQLAlchemy (SQLite / PostgreSQL)             |
+| **Environment Management**  | python-dotenv                                |
 
 ---
 
 ## 🧠 LLM Prompt Design
 
 ### 1️⃣ Resume Extraction Prompt
+
 ```text
 You are an expert resume parser.
 Read the following resume text and extract structured details.
@@ -92,11 +95,13 @@ Required fields:
 
 Resume text:
 ```
+
 → Used in `structured_data()` (Resume Parser with LlamaParse + Gemini)
 
 ---
 
 ### 2️⃣ Job Description Extraction Prompt
+
 ```text
 You are an expert HR analyst.
 Extract key structured information from the following job description text.
@@ -115,11 +120,13 @@ Required JSON fields:
 
 Job Description:
 ```
+
 → Used in `parse_job_description()` (LangChain + Gemini)
 
 ---
 
 ### 3️⃣ Resume vs Job Matching Prompt
+
 ```text
 You are an experienced Technical Recruiter.
 
@@ -133,6 +140,7 @@ Provide:
 
 Output strictly in JSON.
 ```
+
 → Used in `match_job()` chain.
 
 ---
@@ -179,12 +187,14 @@ Output strictly in JSON.
 ## 💻 Local Setup
 
 ### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/your-username/smart-resume-screener.git
 cd smart-resume-screener
 ```
 
 ### 2️⃣ Create a Virtual Environment
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # on macOS/Linux
@@ -192,18 +202,22 @@ source .venv/bin/activate   # on macOS/Linux
 ```
 
 ### 3️⃣ Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4️⃣ Add Your API Key
+
 Create a `.env` file:
+
 ```
 GOOGLE_API_KEY=your_gemini_api_key_here
 DATABASE_URL=sqlite:///smart_screener.db
 ```
 
 ### 5️⃣ Initialize the Database
+
 ```bash
 python
 >>> from backend.database import init_db
@@ -211,12 +225,15 @@ python
 ```
 
 ### 6️⃣ Run the Streamlit Apps
+
 **Main Screener:**
+
 ```bash
 streamlit run app.py --server.port 8501
 ```
 
 **Recruiter Dashboard:**
+
 ```bash
 streamlit run dashboard.py --server.port 8502
 ```
@@ -225,22 +242,24 @@ streamlit run dashboard.py --server.port 8502
 
 ## 📊 Dashboard Features
 
-- View all parsed resumes and job postings  
-- Inspect structured JSON outputs  
-- See match results, filter by score  
-- View top candidate matches by job  
-- Export or analyze data for reports  
+- View all parsed resumes and job postings
+- Inspect structured JSON outputs
+- See match results, filter by score
+- View top candidate matches by job
+- Export or analyze data for reports
 
 ---
 
 ## 🔮 Future Improvements
-- Semantic candidate search using vector embeddings (LangChain + Chroma)  
-- Auto email shortlist notifications to recruiters  
-- Integration with HR platforms (Greenhouse, Lever, etc.)  
-- Fine-tuned LLM for domain-specific job categories  
+
+- Semantic candidate search using vector embeddings (LangChain + Chroma)
+- Auto email shortlist notifications to recruiters
+- Integration with HR platforms (Greenhouse, Lever, etc.)
+- Fine-tuned LLM for domain-specific job categories
 
 ---
 
 ## 👑 Author
-**Legend Ronith Dhanesh**  
-*Developer, AI Engineer, and Creator of Smart Resume Screener*
+
+**Ronith Dhanesh**  
+_Developer, AI Engineer, and Creator of Smart Resume Screener_
