@@ -1,8 +1,11 @@
-import os
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import streamlit as st
 from backend.parsing_utils import structured_data, parse_job_description
 from backend.match_job import match_job
-from backend.database import SessionLocal, Resume, JobDescription, Match  # ✅ NEW IMPORTS
+from backend.database import SessionLocal, Resume, JobDescription, Match  
+
+
 
 
 st.set_page_config(page_title="Smart Resume Screener By Legend Ronith Dhanesh", layout="wide", page_icon="🤖")
